@@ -1,584 +1,338 @@
-/* LABRETTO STYLESHEET
-   Main Color: #D7135E (Strong Pink/Raspberry)
-   Background: #000000 (Pure Black)
-*/
+/* 1. ПОДКЛЮЧЕНИЕ ШРИФТА */
+@font-face {
+    font-family: 'Kreadon';
+    src: url('fonts/Kreadon-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
 
+/* 2. ПЕРЕМЕННЫЕ */
 :root {
-    --bg-dark: #000000;         /* Глубокий черный фон */
-    --bg-card: #0a0a0a;         /* Фон карточек (чуть светлее) */
-    --accent-color: #D7135E;    /* Твой основной цвет */
-    --accent-hover: #ff1a75;    /* Яркий оттенок для наведения */
-    --text-main: #ffffff;       /* Основной белый текст */
-    --text-gray: #888888;       /* Вторичный серый текст */
-    --gradient: linear-gradient(135deg, #D7135E 0%, #8c0d3d 100%);
-    --glow: rgba(215, 19, 94, 0.3);
-    --cyber-pink: #D7135E;
-    --cyber-yellow: #FFD700; /* Более мягкий золотистый желтый */
-    --cyber-blue: #00BFFF;
-}
-
-/* 1. Общие настройки */
-* {
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-}
-
-body {
-    /* Меняем основной шрифт на Montserrat */
-    font-family: 'Montserrat', sans-serif;
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    margin: 0;
-    line-height: 1.6;
+    --bg-dark: #1A1A1A;
+    --bg-white: #ffffff;
+    --text-white: #ffffff;
+    --text-black: #111111;
+    --accent: #D7135E;
+    --transition: 0.8s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 html, body {
-    max-width: 100%;
-    overflow-x: hidden; /* Запрещает скролл влево-вправо */
-    scroll-behavior: smooth; /* Плавный скролл по якорям */
-}
-
-.section_label_container {
-    padding: 120px 5% 60px; /* Отступы: сверху побольше, снизу до блоков поменьше */
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
-}
-
-/* Стиль самой надписи */
-.section_title_centered {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(2.5rem, 6vw, 4rem); /* Крупный, но не чрезмерный размер */
-    font-weight: 700;
-    color: #ffffff; /* Чисто белый цвет */
-    text-transform: uppercase;
-    letter-spacing: 4px; /* Небольшое расстояние между буквами для премиальности */
     margin: 0;
-    text-align: center;
+    padding: 0;
+    overflow-x: hidden; /* Запрещает горизонтальную прокрутку */
     position: relative;
 }
 
-/* Опционально: маленькая розовая точка в конце для стиля Labretto */
-.section_title_centered::after {
-    content: '';
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    background-color: var(--cyber-pink);
-    border-radius: 50%;
-    margin-left: 10px;
-    vertical-align: middle;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    transition: background-color var(--transition), color var(--transition);
 }
 
-.bg-glow { display: none; }
+body.scrolled {
+    background-color: var(--bg-white);
+    color: var(--text-black);
+}
 
-.background-gradient-overlay {
+/* 3. НАВИГАЦИЯ */
+.navbar_component {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-
-    /* Используем максимально насыщенные цвета без лишней прозрачности внутри градиента */
-    background: radial-gradient(circle at 15% 25%, #D7135E 0%, transparent 45%),
-    radial-gradient(circle at 85% 75%, #FFD700 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, #8c0d3d 0%, transparent 50%);
-
-    background-size: 150% 150%;
-
-    /* Поднимаем общую прозрачность. 0.7 — это уже очень ярко */
-    opacity: 0.7;
-
-    /* Уменьшаем blur — чем меньше это число, тем отчетливее и сочнее пятна */
-    filter: blur(50px);
-
-    /* mix-blend-mode: plus-lighter заставляет цвета суммироваться и гореть */
-    mix-blend-mode: plus-lighter;
-
-    pointer-events: none;
-    animation: gradientShift 10s ease-in-out infinite alternate;
-}
-
-
-a {
-    text-decoration: none;
-    transition: 0.3s ease;
-}
-
-/* 2. Навигация */
-.navbar_component {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px 5%; /* Увеличил отступы для воздуха */
-    position: absolute; /* Чтобы она плавала НАД градиентом, а не отодвигала его */
-    top: 0;
-    left: 0;
     right: 0;
-    background: transparent; /* Убрали черный фон */
-    backdrop-filter: none;    /* Убрали размытие плашки */
-    border-bottom: none;      /* Убрали линию снизу */
+    padding: 20px 5%;
     z-index: 1000;
+    /* Плавный переход для смены цвета */
+    transition: background 0.4s ease, border-bottom 0.4s ease, backdrop-filter 0.4s ease;
+
+    /* Начальное состояние (на темном фоне) */
+    background: rgba(26, 26, 26, 0.01);
+    border-bottom: 1px solid rgba(255, 255, 255, 0);
 }
 
-.navbar_logo {
-    font-family: 'Kreadon', 'Archivo', sans-serif; /* Первым делом ищет Kreadon */
-    font-size: 32px;
-    font-weight: 700;          /* Жирное начертание */
-    letter-spacing: -1px;      /* Плотный кернинг для стиля "lab" */
-    color: #ffffff;            /* Чисто белый цвет */
-    text-transform: lowercase; /* Всегда строчные буквы */
-    -webkit-text-fill-color: initial; /* Сбрасываем градиент, который был раньше */
-    background: none;          /* Убираем фоновый градиент */
+/* Эффект стекла при скролле (и на белых страницах) */
+body.scrolled .navbar_component {
+    background: rgba(255, 255, 255, 0.8); /* Полупрозрачный белый */
+    backdrop-filter: blur(15px); /* Тот самый эффект размытия */
+    -webkit-backdrop-filter: blur(15px); /* Поддержка Safari */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Тонкая линия снизу */
 }
 
-.navbar_link {
-    margin-left: 30px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #ffffff; /* Сделал ссылки белыми под лого */
-    opacity: 0.7;
-}
-
-.navbar_link:hover {
-    opacity: 1;
-    color: var(--cyber-yellow); /* Оставил желтый акцент при наведении */
-}
-
-/* 3. Hero секция */
-.section_hero {
-    padding: 140px 5% 100px;
+.navbar_container {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    gap: 40px;
+}
+
+.logo_icon {
+    height: 45px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    transition: filter 0.5s ease;
+}
+
+body.scrolled .logo_icon {
+    filter: none;
+}
+
+.navbar_links_list {
+    display: flex;
+    gap: 30px;
+}
+
+.nav_link {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-white);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    opacity: 0.6;
+    transition: all 0.5s ease;
+}
+
+body.scrolled .nav_link {
+    color: var(--text-black);
+}
+
+.nav_link:hover {
+    opacity: 1;
+    color: var(--accent);
+}
+
+/* 4. HERO (ТЕМНЫЙ) */
+.section_hero {
+    height: 85vh; /* Чуть уменьшил высоту, чтобы "О нас" было видно раньше */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    position: relative;
+    padding: 0 5%;
 }
 
 .hero_heading h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700; /* Жирный шрифт для заголовка */
-    font-size: clamp(3rem, 8vw, 5rem);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 800;
     line-height: 1.1;
-    letter-spacing: -2px; /* Чуть плотнее, так выглядит премиальнее */
-    margin-bottom: 25px;
+    letter-spacing: -2px;
+    margin: 0;
 }
 
-.hero_heading span {
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.hero_description p {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.7); /* Чуть приглушим описание, чтобы выделить заголовок */
-    max-width: 550px;
-    margin: 0 auto 40px;
-}
-
-/* 4. Кнопки (Киберпанк Outline стиль) */
-.button {
-    display: inline-flex;
-    align-items: center;
-    background: transparent;
-    color: #ffffff;               /* Белый текст */
-    padding: 16px 34px;
-    border-radius: 50px;
-    font-weight: 600;
-    border: 1px solid rgba(255, 255, 255, 0.5); /* Тонкая белая окантовка */
+/* 5. КОНТЕНТ (БЕЛЫЙ "НАЕЗД") */
+.content-reveal-wrapper {
+    background-color: var(--bg-white);
+    color: var(--text-black);
+    border-radius: 40px 40px 0 0;
     position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    cursor: pointer;
+    z-index: 2;
+    margin-top: -60px; /* Нахлест на темный фон */
+    padding: 100px 5%;
+    box-shadow: 0 -20px 40px rgba(0,0,0,0.1);
+}
+
+/* 6. О НАС */
+.section_title_centered {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 60px;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    font-size: 13px;
-}
-
-/* Эффект при наведении */
-.button:hover {
-    background: #ffffff;          /* При наведении кнопка становится белой */
-    color: #000000;               /* Текст черным */
-    border-color: #ffffff;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* Белое свечение */
-    transform: translateY(-2px);
-}
-
-.btn-small {
-    padding: 10px 22px;
-    font-size: 11px;
-    margin-left: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-/* Иконка внутри кнопки */
-.button-icon {
-    margin-left: 12px;
-    display: flex;
-    align-items: center;
-    transition: transform 0.3s ease;
-}
-
-.button:hover .button-icon {
-    transform: translateX(5px);      /* Стрелочка чуть сдвигается вправо */
-}
-
-/* SVG иконка теперь тоже красится в цвет текста кнопки */
-.button svg {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-}
-
-/* 5. Услуги и Карточки */
-.section_services {
-    padding: 100px 0;
-}
-
-.section_hero {
-    padding: 200px 5% 120px; /* Увеличил верхний padding, так как навигация теперь сверху */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    letter-spacing: 2px;
     text-align: center;
-    position: relative;
-    min-height: 80vh; /* Чтобы секция была высокой */
-}
-
-.services_grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-    margin-top: 60px;
-}
-
-.service_card {
-    background: var(--bg-card);
-    padding: 50px 40px;
-    border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    transition: 0.4s;
-}
-
-.service_card:hover {
-    border-color: var(--accent-color);
-    background: #0d0d0d;
-}
-
-.service_number {
-    color: var(--accent-color);
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 25px;
-}
-
-/* 6. Секция О нас и твой текст */
-.section_about {
-    padding: 120px 5%;
-    background: #050505;
 }
 
 .about_grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.post-box {
-    border-left: 4px solid var(--accent-color);
-    padding: 25px;
-    background: rgba(215, 19, 94, 0.05);
-    font-style: italic;
-    font-size: 1.1rem;
-    color: var(--text-main);
-    margin-top: 30px;
-}
-
-.stat-card {
-    background: var(--bg-card);
-    padding: 40px;
-    border-radius: 25px;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.stat-card h3 {
-    color: var(--accent-color);
-    font-size: 3.5rem;
-    margin: 0;
-}
-
-/* Секция проектов */
-.section_projects {
-    padding: 100px 5%;
-    position: relative;
-    z-index: 1;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Сетка Bento */
-.project_group {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 колонки */
-    grid-auto-rows: minmax(200px, auto);
+    grid-template-columns: 1.5fr 1fr;
     gap: 20px;
-    margin-bottom: 80px; /* Отступ между разными проектами */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* Общий стиль блоков */
 .bento_block {
-    background: #222222; /* Твой цвет */
-    border-radius: 24px;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: #f5f5f7;
+    border: 1px solid #e5e5e5;
+    border-radius: 28px;
+    padding: 45px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .bento_block:hover {
     transform: translateY(-5px);
-    border-color: var(--cyber-pink); /* Легкий розовый контур при наведении */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
-/* Специфические настройки блоков */
-.block_title {
-    grid-column: span 1;
-}
-
-.block_description {
-    grid-column: span 2; /* Описание шире заголовка */
-}
-
-.block_image {
-    grid-column: span 3; /* Картинка на всю ширину */
-    height: 400px;
-    padding: 0;
-    overflow: hidden;
-    background: #1a1a1a;
-}
-
-/* Тексты внутри блоков */
 .block_label {
-    color: var(--cyber-pink);
-    font-size: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
-.project_name {
-    font-size: 32px;
-    margin: 0;
-    color: #ffffff;
-}
-
-.project_tag {
-    margin-top: 15px;
-    font-size: 14px;
-    color: var(--text-gray);
-}
-
-.block_description p {
-    font-size: 18px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.8);
-    margin: 0;
-}
-
-/* Секция контактов */
-.section_contacts {
-    padding: 80px 5% 100px;
-    width: 100%;
-}
-
-.block_contacts {
-    background: #222222;
-    padding: 60px !important;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 40px; /* Сделаем чуть более скругленным для финала */
-}
-
-.contacts_title {
-    font-size: clamp(2rem, 5vw, 3rem);
-    margin: 20px 0 50px;
+.about_heading {
+    font-size: 28px;
+    margin-bottom: 15px;
     font-weight: 700;
-    color: #ffffff;
 }
 
-.contacts_grid {
+.status_dot {
+    width: 10px;
+    height: 10px;
+    background: #00ff88;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 10px #00ff88;
+    animation: blink 2s infinite;
+}
+
+/* Стили для страницы продуктов */
+.products_grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    width: 100%;
-    max-width: 900px;
-}
-
-.contact_item {
-    display: flex;
-    flex-direction: column;
-    padding: 25px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
-}
-
-.contact_item:hover {
-    background: rgba(215, 19, 94, 0.1); /* Легкий розовый отсвет при наведении */
-    border-color: var(--cyber-pink);
-    transform: translateY(-5px);
-}
-
-.contact_label {
-    font-size: 12px;
-    text-transform: uppercase;
-    color: var(--cyber-pink);
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-}
-
-.contact_value {
-    font-size: 16px;
-    color: #ffffff;
-    font-weight: 500;
-    word-break: break-all; /* Чтобы длинная почта не ломала мобилку */
-}
-
-.footer_mini {
-    margin-top: 60px;
-    opacity: 0.3;
-    font-size: 12px;
-    letter-spacing: 1px;
-}
-
-/* Заглушка для картинки */
-.image_placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(45deg, #222222, #2a2a2a);
-    color: #444;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 5px;
-}
-
-
-/* 7. Декор и Футер */
-.bg-glow {
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    background: var(--accent-color);
-    filter: blur(200px);
-    opacity: 0.15;
-    top: -150px;
-    z-index: -1;
-}
-
-.footer {
-    padding: 100px 5% 40px;
-    border-top: 1px solid rgba(215, 19, 94, 0.1);
-    text-align: center;
-}
-
-.footer_links a {
-    margin: 0 15px;
-    color: var(--text-gray);
-}
-
-.footer_links a:hover {
-    color: var(--accent-color);
-}
-
-/* Специальный блок для галереи скриншотов */
-.block_gallery {
-    grid-column: span 3; /* На всю ширину */
-    padding: 60px 20px !important;
-    background: #222222;
-    overflow: hidden;
-}
-
-.screens_container {
-    display: flex;
-    justify-content: center;
+    grid-template-columns: repeat(2, 1fr); /* 2 колонки */
     gap: 20px;
-    flex-wrap: wrap; /* Чтобы на мобилках они переносились */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.app_screen {
-    width: 220px; /* Фиксированная ширина для вертикальных кадров */
-    height: auto;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+.product_main {
+    grid-column: span 2; /* Главный продукт на всю ширину */
+    background: #fdfdfd;
+    border: 2px solid var(--accent); /* Выделяем Searcli розовым бордером */
 }
 
-/* Эффект при наведении на конкретный скриншот */
-.app_screen:hover {
-    transform: scale(1.05) translateY(-10px);
-    border-color: var(--cyber-pink);
-    z-index: 2;
+.product_tags {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
 }
 
-/* 8. Адаптивность */
-@media (max-width: 991px) {
-    .about_grid { grid-template-columns: 1fr; gap: 40px; }
-    .hero_heading h1 { font-size: 3.5rem; }
-    .navbar_menu { display: none; } /* Для мобилки нужно будет добавить бургер-меню */
+/* Кнопка */
+.primary_button {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: var(--text-black);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: transform 0.3s ease, background 0.3s ease;
 }
 
-@media (max-width: 768px) {
-    .project_group {
-        grid-template-columns: 1fr; /* В одну колонку на телефоне */
+.primary_button:hover {
+    background-color: var(--accent);
+    transform: scale(1.05);
+}
+
+@keyframes blink {
+    0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; }
+}
+
+.year_display {
+    font-size: 40px;
+    font-weight: 800;
+    margin-top: 20px;
+}
+
+/* 7. АДАПТИВНОСТЬ */
+/* 8. МОБИЛЬНАЯ ОПТИМИЗАЦИЯ (Smartphones) */
+@media (max-width: 767px) {
+
+    /* Уменьшаем отступы в шапке, чтобы логотип и меню не теснились */
+    .navbar_component {
+        padding: 15px 5%;
     }
-    .block_title, .block_description, .block_image {
-        grid-column: span 1;
+
+    .navbar_container {
+        gap: 20px;
+        justify-content: space-between;
+    }
+
+    .logo_icon {
+        height: 35px; /* Чуть меньше лого на мобилке */
+    }
+
+    .navbar_links_list {
+        gap: 15px; /* Меньше расстояние между ссылками */
+    }
+
+    .nav_link {
+        font-size: 10px; /* Компактный шрифт для меню */
+        letter-spacing: 0.5px;
+    }
+
+    /* Главный заголовок на первом экране */
+    .hero_heading h1 {
+        font-size: 32px; /* Чтобы текст не разбивался некрасиво */
+        line-height: 1.2;
+        letter-spacing: -1px;
+    }
+
+    /* Белая подложка */
+    .content-reveal-wrapper {
+        margin-top: -40px; /* Меньше нахлест */
+        padding: 50px 5% 20px; /* Меньше внутренние отступы */
+        border-radius: 30px 30px 0 0;
+    }
+
+    /* Сетка Bento - строго в одну колонку */
+    .about_grid, .products_grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+
+    /* Блоки занимают всю ширину */
+    .product_main, .bento_block {
+        grid-column: span 1 !important;
+        padding: 25px; /* Меньше воздуха внутри блоков */
+    }
+
+    .about_heading {
+        font-size: 20px; /* Заголовки в карточках */
+    }
+
+    .section_title_centered {
+        font-size: 26px; /* Заголовки секций "О нас", "Продукты" */
+        margin-bottom: 30px;
+    }
+
+    /* Кнопки на весь экран для удобного нажатия пальцем */
+    .primary_button {
+        display: block;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 18px;
+    }
+
+    .year_display {
+        font-size: 28px;
+    }
+
+    /* Исправление для карточек контактов */
+    .contact_card {
+        min-height: auto;
+    }
+
+    .link_arrow {
+        top: 20px;
+        right: 20px;
+        font-size: 18px;
     }
 }
 
-@media (max-width: 768px) {
-    .block_contacts {
-        padding: 40px 20px !important;
-    }
-}
-
-@media (max-width: 991px) {
-    .app_screen {
-        width: 180px;
-    }
-}
-
-@media (max-width: 480px) {
-    .app_screen {
-        width: 140px;
+/* 9. СУПЕР-МАЛЕНЬКИЕ ЭКРАНЫ (iPhone SE и подобные) */
+@media (max-width: 380px) {
+    .navbar_links_list {
         gap: 10px;
     }
-    .screens_container {
-        gap: 10px;
+    .hero_heading h1 {
+        font-size: 28px;
     }
-}
-
-@keyframes gradientShift {
-    0% { background-position: 0% 0%; transform: scale(1); }
-    100% { background-position: 100% 100%; transform: scale(1.1); }
 }

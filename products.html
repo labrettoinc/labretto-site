@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <title>Searcli — Labretto</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="src/assets/favicon.png">
+    <link rel="apple-touch-icon" href="src/assets/favicon.png">
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="body scrolled">
+
+<nav class="navbar_component">
+    <div class="navbar_container">
+        <a href="index.html" class="navbar_logo">
+            <img src="src/assets/favicon.png" alt="lab" class="logo_icon">
+        </a>
+        <div class="navbar_links_list">
+            <a href="index.html" class="nav_link">Главная</a>
+            <a href="products.html" class="nav_link">Продукты</a>
+            <a href="about.html" class="nav_link">О компании</a>
+            <a href="contacts.html" class="nav_link">Контакты</a>
+        </div>
+    </div>
+</nav>
+
+<main class="content-reveal-wrapper" style="margin-top: 100px; border-radius: 0; box-shadow: none;">
+    <section class="section_about">
+        <div class="container">
+            <div class="section_label_container">
+                <h1 class="section_title_centered">Searcli</h1>
+            </div>
+
+            <div class="about_grid">
+
+                <div class="bento_block" style="grid-column: span 2;">
+                    <div class="block_label">Доступно сейчас — v1.4.4</div>
+                    <h2 class="about_heading">Браузер, который не мешает</h2>
+                    <p>Searcli — это наше видение идеального инструмента для работы в сети. Мы убрали лишние панели, отвлекающие уведомления и перегруженные меню. Только вы и контент.</p>
+
+                    <div style="margin-top: 30px;">
+                        <a href="https://www.rustore.ru/catalog/app/com.example.searcli" target="_blank" class="primary_button" style="background: #005bff;">
+                            Скачать в RuStore
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bento_block" style="border: 2px dashed var(--accent);">
+                    <div class="block_label">Работаем день и ночь</div>
+                    <h3 class="about_heading">v1.5</h3>
+                    <p>В следующем обновлении мы полностью переосмыслили систему вкладок, добавили еще больше жестов управления и приятных фишек.</p>
+                </div>
+
+                <div class="bento_block">
+                    <div class="block_label">Философия</div>
+                    <h3 class="about_heading">Скорость и чистота</h3>
+                    <p>Минимум ресурсов системы — максимум фокуса на ваших задачах. Searcli оптимизирован для плавной, а Zero UI делает контент приятнее.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="src/index.js"></script>
+</body>
+</html>
